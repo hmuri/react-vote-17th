@@ -1,7 +1,13 @@
 import './App.css';
+import { GlobalStyle } from './styles/GlobalStyle';
 
 function App() {
-    return <div>Let's make something fun!</div>;
+    return (
+        <>
+            <GlobalStyle />
+            <div>Let's make something fun!</div>
+        </>
+    );
 }
 
 export default App;
