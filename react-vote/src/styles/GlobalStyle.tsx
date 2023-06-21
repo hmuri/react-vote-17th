@@ -17,4 +17,24 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Pretendard-Regular';
     line-height: 1.5;
   }
+
+  button{
+    font-family: 'Pretendard-Regular';
+    line-height: 1.5;
+    font-size: 28px;
+    color: #FFFFFF;
+  }
+
+  textarea{
+    font-family: 'Pretendard-Regular';
+    line-height: 1.5;
+    font-size: 24px;
+    resize: none;
+    &::placeholder{
+      color: rgba(33, 33, 33, 0.3);
+    }
+    :focus{
+      outline:none;
+    }
+  }
 `;
