@@ -4,11 +4,15 @@ import styled from 'styled-components';
 import TextInput from '../components/LogIn/TextInput';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userInfo } from '../recoil';
 
 export default function LogIn() {
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
-    const onClickLogin = async () => {
+    const [userInfos, setUserInfo] = useRecoilState(userInfo);
+    const onClickLogIn = async () => {
+        try{
         let request = {
             username: id,
             password: pw,
@@ -27,7 +31,14 @@ export default function LogIn() {
         if(data.message === "현재 로그인된 유저 정보 조회 성공"){
             const accessToken = data.token.access;
             axios.defaults.headers.common['Authorization'] = accessToken;
+            setUserInfo(data.data);
+            window.location.replace("/voteBoss");
+        }else{
+            alert("존재하지 않는 아이디입니다.");
         }
+    } catch(error){
+
+    }
 
     };
 
@@ -37,8 +48,8 @@ export default function LogIn() {
                 <TextInput placeholder="아이디를 입력해주세요" />
                 <TextInput placeholder="비밀번호를 입력해주세요" />
                 {/* 각각 value 추가하기 */}
-                <Button>로그인</Button>
-                <JoinText onClick={onClickJoinText}>회원가입</JoinText>
+                <Button onClick={onClickLogIn}>로그인</Button>
+                <JoinText>회원가입</JoinText>
             </Wrapper>
     );
 }
