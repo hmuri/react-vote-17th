@@ -18,7 +18,7 @@ function App() {
             <Navbar location = {location.pathname}/>
             <RightContainer>
                 <Routes>
-                    <Route path="/logIn" element={<LogIn/>}/>
+                    <Route path="/" element={<LogIn/>}/>
                     <Route path="/joinUs" element={<SignUp/>}/>
                     <Route path="/voteBoss" element={<VoteBoss/>}/>
                     <Route path="/bossResult" element={<BossResult/>}/>
@@ -38,10 +38,12 @@ const Container = styled.div`
 
 `
 const RightContainer = styled.div`
+    margin-left: 186px;
     width: 100%;
     height: 100%;
     display: flex;
     background-color: #F9F9F9;
+    height: 100vh;
 `
 
 export default App;

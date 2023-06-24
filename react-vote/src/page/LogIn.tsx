@@ -15,8 +15,6 @@ export default function LogIn() {
 
     return (
         // Temp와 TempSideBar는 스크롤바가 완성된 후 삭제 예정
-        <Temp>
-            <TempSideBar />
             <Wrapper>
                 <TextInput placeholder="아이디를 입력해주세요" />
                 <TextInput placeholder="비밀번호를 입력해주세요" />
@@ -24,25 +22,10 @@ export default function LogIn() {
                 <Button>로그인</Button>
                 <JoinText onClick={onClickJoinText}>회원가입</JoinText>
             </Wrapper>
-        </Temp>
     );
 }
 
-const Temp = styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    margin-left: 20%;
-    width: 80rem;
-    height: 52rem;
-    background-color: beige;
-`;
 
-const TempSideBar = styled.div`
-    width: 11.625rem;
-    height: 100%;
-    background-color: blue;
-`;
 
 const Wrapper = styled.div`
     display: flex;
@@ -50,7 +33,7 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 68.375rem;
+    width: 100%;
     height: 100%;
     background-color: #f9f9f9;
 `;

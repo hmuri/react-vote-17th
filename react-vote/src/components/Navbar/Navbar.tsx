@@ -17,6 +17,7 @@ const Container = styled.div`
     top: 0;
     left: 0;
     z-index: 10000;
+    height: 100vh;
 `
 
 const LogoBox = styled.div`
