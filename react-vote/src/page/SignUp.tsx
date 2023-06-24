@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import TextInput from '../components/LogIn/TextInput';
 import { ButtonHTMLAttributes, useState } from 'react';
 import DropDown from '../components/LogIn/DropDown';
+import axios from 'axios';
 
 type PartButtonProps = {
     selected: boolean;

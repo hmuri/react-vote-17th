@@ -6,11 +6,29 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export default function LogIn() {
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const [user, setUser] = userRecoilState('');
-    const onClickJoinText = () => {
-        // useNavigate('/signup')
-        console.log('hi');
+    const [id, setId] = useState('');
+    const [pw, setPw] = useState('');
+    const onClickLogin = async () => {
+        let request = {
+            username: id,
+            password: pw,
+        };
+
+        const response = await fetch(`http://3.37.230.93/accounts/login/`,{
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify(request),
+        });
+        
+        const data = await response.json();
+
+        if(data.message === "현재 로그인된 유저 정보 조회 성공"){
+            const accessToken = data.token.access;
+            axios.defaults.headers.common['Authorization'] = accessToken;
+        }
+
     };
 
     return (
