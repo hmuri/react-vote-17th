@@ -1,7 +1,25 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import NameBox from './NameBox';
+import InfoBox from './InfoBox';
+
+
+
+function Navbar({location} : {location: string}){
+    const navigate = useNavigate();
+    return(
+        <Container>
+            <LogoBox/>
+            <LogBox isDisabled={true} >로그인</LogBox>
+            <InfoBox isDisabled={false}/>
+            <VoteBox isActive={location == '/voteBoss' || location == '/bossResult'} onClick={() => navigate("/voteBoss")}>파트장 투표</VoteBox>
+            <VoteBox isActive={location == '/voteDemo' || location == '/demoResult'} onClick={() => navigate("/voteDemo")}>데모데이 투표</VoteBox>
+        </Container>
+    );
+}
+
+export default Navbar;
+
 
 const Container = styled.div`
     width: 186px;
@@ -55,17 +73,3 @@ const VoteBox = styled.div<{ isActive : boolean; }>`
     background-color: ${props => props.isActive === true ? '#224C97' : '#ffffff'};
     border: ${props => props.isActive === true ? 'none' : 'solid 2px #F9F9F9'};
 `
-
-function Navbar({location} : {location: string}){
-    return(
-        <Container>
-            <LogoBox/>
-            <LogBox isDisabled={false}>로그인</LogBox>
-            <NameBox isDisabled={true}/>
-            <VoteBox isActive={false} >파트장 투표</VoteBox>
-            <VoteBox isActive={false} >데모데이 투표</VoteBox>
-        </Container>
-    );
-}
-
-export default Navbar;

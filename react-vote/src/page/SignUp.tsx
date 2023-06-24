@@ -15,8 +15,7 @@ export default function SignUp() {
     };
 
     return (
-        <Temp>
-            <TempSideBar />
+
             <Wrapper>
                 <PartWrapper>
                     <PartButton onClick={() => onClickChoosePart('frontend')} selected={selectPart === 'frontend'}>
@@ -35,25 +34,10 @@ export default function SignUp() {
                 <Button>회원가입</Button>
                 {/* 회원가입 하면 바로 팟짱 투표로 가는걸로할까 아니면 로그인 페이지로 갈까 */}
             </Wrapper>
-        </Temp>
     );
 }
 
-const Temp = styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    margin-left: 20%;
-    width: 80rem;
-    height: 52rem;
-    background-color: beige;
-`;
 
-const TempSideBar = styled.div`
-    width: 11.625rem;
-    height: 100%;
-    background-color: blue;
-`;
 
 const Wrapper = styled.div`
     display: flex;
@@ -61,8 +45,8 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 68.375rem;
-    height: 100%;
+    width: 100%;
+    height: 100vh;
     background-color: #f9f9f9;
 `;
 

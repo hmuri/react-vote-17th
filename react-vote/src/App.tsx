@@ -19,7 +19,7 @@ function App() {
             <RightContainer>
                 <Routes>
                     <Route path="/" element={<LogIn/>}/>
-                    <Route path="/joinUs" element={<SignUp/>}/>
+                    <Route path="/signUp" element={<SignUp/>}/>
                     <Route path="/voteBoss" element={<VoteBoss/>}/>
                     <Route path="/bossResult" element={<BossResult/>}/>
                     <Route path="/voteDemo" element={<VoteDemo/>}/>
