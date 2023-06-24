@@ -6,7 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import BossResult from './page/BossResult';
 import DemoResult from './page/DemoResult';
 import JoinUs from './page/JoinUs';
-import LogIn from './page/Login';
+import LogIn from './page/LogIn';
 import VoteBoss from './page/VoteBoss';
 import VoteDemo from './page/VoteDemo';
 

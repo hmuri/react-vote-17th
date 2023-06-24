@@ -23,6 +23,10 @@ const LogoBox = styled.div`
     width: 100%;
     display: flex;
     height: 138px;
+    background-image: url(${process.env.PUBLIC_URL}/image/logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: solid 2px #F9F9F9;
 `
 
 const LogBox = styled.div<{ isDisabled : boolean; }>`
@@ -48,15 +52,16 @@ const VoteBox = styled.div<{ isActive : boolean; }>`
     font-weight: 400;
     color: ${props => props.isActive === true ? '#ffffff' : '#224C97'};
     background-color: ${props => props.isActive === true ? '#224C97' : '#ffffff'};
+    border: ${props => props.isActive === true ? 'none' : 'solid 2px #F9F9F9'};
 `
 
 function Navbar({location} : {location: string}){
     return(
         <Container>
             <LogoBox/>
-            <LogBox isDisabled={true}>로그인</LogBox>
-            <NameBox isDisabled={false}/>
-            <VoteBox isActive={true} >파트장 투표</VoteBox>
+            <LogBox isDisabled={false}>로그인</LogBox>
+            <NameBox isDisabled={true}/>
+            <VoteBox isActive={false} >파트장 투표</VoteBox>
             <VoteBox isActive={false} >데모데이 투표</VoteBox>
         </Container>
     );
