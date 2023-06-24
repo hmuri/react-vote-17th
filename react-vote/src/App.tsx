@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Navbar from './components/Navbar/Navbar';
 import BossResult from './page/BossResult';
 import DemoResult from './page/DemoResult';
-import JoinUs from './page/JoinUs';
+import SignUp from './page/SignUp';
 import LogIn from './page/LogIn';
 import VoteBoss from './page/VoteBoss';
 import VoteDemo from './page/VoteDemo';
@@ -19,7 +19,7 @@ function App() {
             <RightContainer>
                 <Routes>
                     <Route path="/logIn" element={<LogIn/>}/>
-                    <Route path="/joinUs" element={<JoinUs/>}/>
+                    <Route path="/joinUs" element={<SignUp/>}/>
                     <Route path="/voteBoss" element={<VoteBoss/>}/>
                     <Route path="/bossResult" element={<BossResult/>}/>
                     <Route path="/voteDemo" element={<VoteDemo/>}/>
