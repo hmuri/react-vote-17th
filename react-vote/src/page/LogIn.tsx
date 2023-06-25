@@ -8,45 +8,42 @@ import { useEffect, useState } from 'react';
 export default function LogIn() {
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
-
-    const onClickJoinText = () => {
-        // useNavigate('/signup')
-        console.log('hi');
-    };
-
     const onClickLogin = async () => {
         let request = {
             username: id,
             password: pw,
         };
 
-        const response = await fetch(`http://3.37.230.93/accounts/login/`, {
+        const response = await fetch(`http://3.37.230.93/accounts/login/`,{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type' : 'application/json',
             },
             body: JSON.stringify(request),
         });
-
+        
         const data = await response.json();
 
-        if (data.message === '현재 로그인된 유저 정보 조회 성공') {
+        if(data.message === "현재 로그인된 유저 정보 조회 성공"){
             const accessToken = data.token.access;
             axios.defaults.headers.common['Authorization'] = accessToken;
         }
+
     };
 
     return (
         // Temp와 TempSideBar는 스크롤바가 완성된 후 삭제 예정
-        <Wrapper>
-            {/* <TextInput placeholder="아이디를 입력해주세요" />
-                <TextInput placeholder="비밀번호를 입력해주세요" /> */}
-            {/* 각각 value 추가하기 */}
-            <Button>로그인</Button>
-            <JoinText onClick={onClickJoinText}>회원가입</JoinText>
-        </Wrapper>
+            <Wrapper>
+                <TextInput placeholder="아이디를 입력해주세요" />
+                <TextInput placeholder="비밀번호를 입력해주세요" />
+                {/* 각각 value 추가하기 */}
+                <Button>로그인</Button>
+                <JoinText onClick={onClickJoinText}>회원가입</JoinText>
+            </Wrapper>
     );
 }
+
+
 
 const Wrapper = styled.div`
     display: flex;
