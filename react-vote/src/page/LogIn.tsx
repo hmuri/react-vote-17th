@@ -1,4 +1,4 @@
-import axios, {AxiosError} from 'axios';
+import axios from 'axios';
 
 import styled from 'styled-components';
 import TextInput from '../components/LogIn/TextInput';
@@ -6,10 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../recoil';
-
-interface ErrorResponse {
-    message: string;
-}
 
 export default function LogIn() {
     const [id, setId] = useState("");
@@ -29,30 +25,13 @@ export default function LogIn() {
             axios.defaults.headers.common['Authorization'] = accessToken;
             setUserInfo(data.data);
             window.location.replace("/voteBoss");
-        }else {
-            throw new Error(data.message);
+        }else if (data.message === "로그인 실패"){
+            alert("존재하지 않는 아이디입니다.");
         }
     } catch(error){
-        const axiosError = error as AxiosError<ErrorResponse>;
-        if (axiosError.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            const errorMessage = axiosError.response.data.message;
-            if (errorMessage === "로그인 실패") {
-                alert("존재하지 않는 아이디입니다.");
-            }
-            console.log(axiosError.response.data);
-            console.log(axiosError.response.status);
-            console.log(axiosError.response.headers);
-        } else if (axiosError.request) {
-            // The request was made but no response was received
-            console.log(axiosError.request);
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', axiosError.message);
+        console.log(error);
         }
-    }
-};
+    };
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
