@@ -24,11 +24,10 @@ export default function LogIn() {
         const response = await axios.post(`http://3.37.230.93/accounts/login/`, formData);
         const data = response.data;
 
-        if(data.message === "현재 로그인된 유저 정보 조회 성공"){
+        if(data.message === "로그인 성공"){
             const accessToken = data.token.access;
             axios.defaults.headers.common['Authorization'] = accessToken;
-            setUserInfo(data.data);
-            window.location.replace("/voteBoss");
+            setUserInfo(data.user);
         }else {
             throw new Error(data.message);
         }
