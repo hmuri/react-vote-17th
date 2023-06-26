@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import styled from 'styled-components';
 import TextInput from '../components/LogIn/TextInput';
@@ -6,6 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../recoil';
+
+interface ErrorResponse {
+    message: string;
+}
 
 export default function LogIn() {
     const [id, setId] = useState("");
@@ -25,11 +29,25 @@ export default function LogIn() {
             axios.defaults.headers.common['Authorization'] = accessToken;
             setUserInfo(data.data);
             window.location.replace("/voteBoss");
-        }else if (data.message === "로그인 실패"){
-            alert("존재하지 않는 아이디입니다.");
+        }else {
+            throw new Error(data.message);
         }
     } catch(error){
-        console.log(error);
+        const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
+
+    if (axiosError.response) {
+        const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
+        if (errorMessage === "로그인 실패") {
+            alert("존재하지 않는 아이디입니다.");
+        }
+        console.log(axiosError.response.data);
+        console.log(axiosError.response.status);
+        console.log(axiosError.response.headers);
+    } else if (axiosError.request) {
+        console.log(axiosError.request);
+    } else {
+        console.log('Error', axiosError.message);
+    }
         }
     };
 

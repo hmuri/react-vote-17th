@@ -9,11 +9,11 @@ export const userActive = atom<boolean>({
 export const userInfo = atom<IUserInfo>({
     key: "userInfo",
     default: {
-        username: "",
-        password: "",
-        email: "",
-        name: "",
-        part: "",
-        team: "",
+        username: "hmuri",
+        password: "2222",
+        email: "minju1326@ewhain.net",
+        name: "최민주",
+        part: "Front",
+        team: "바리바리",
     }
 });

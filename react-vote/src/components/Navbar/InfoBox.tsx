@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import {userInfo} from '../../recoil';
+import {useRecoilValue} from 'recoil';
 
 const Container = styled.div<{ isDisabled : boolean; }>`
     width: 100%;
@@ -36,11 +38,12 @@ const LogOutBtn = styled.button`
 
 
 function InfoBox({isDisabled} : {isDisabled : boolean}){
+    const user = useRecoilValue(userInfo);
     return(
         <Container isDisabled={isDisabled}>
-            <NameBox>Name</NameBox>
-            <TeamBox>Team</TeamBox>
-            <PartBox>Part</PartBox>
+            <NameBox>{user.username}</NameBox>
+            <TeamBox>{user.team}</TeamBox>
+            <PartBox>{user.part}</PartBox>
             <LogOutBtn>로그아웃</LogOutBtn>
         </Container>
     );
