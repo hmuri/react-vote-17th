@@ -62,6 +62,7 @@ export default function LogIn() {
                 <Input 
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setId(e.target.value)}
                     placeholder="아이디를 입력해주세요"
+                    type = "text"
                     />
                 <Input 
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPw(e.target.value)}
