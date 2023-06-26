@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 
 import styled from 'styled-components';
 import TextInput from '../components/LogIn/TextInput';
@@ -7,48 +7,72 @@ import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../recoil';
 
+interface ErrorResponse {
+    message: string;
+}
+
 export default function LogIn() {
-    const [id, setId] = useState('');
-    const [pw, setPw] = useState('');
+    const [id, setId] = useState("");
+    const [pw, setPw] = useState("");
     const [userInfos, setUserInfo] = useRecoilState(userInfo);
     const onClickLogIn = async () => {
         try{
-        let request = {
-            username: id,
-            password: pw,
-        };
+            const formData = new FormData();
+            formData.append('username', id);
+            formData.append('password', pw);
 
-        const response = await fetch(`http://3.37.230.93/accounts/login/`,{
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/json',
-            },
-            body: JSON.stringify(request),
-        });
-        
-        const data = await response.json();
+        const response = await axios.post(`http://3.37.230.93/accounts/login/`, formData);
+        const data = response.data;
 
         if(data.message === "현재 로그인된 유저 정보 조회 성공"){
             const accessToken = data.token.access;
             axios.defaults.headers.common['Authorization'] = accessToken;
             setUserInfo(data.data);
             window.location.replace("/voteBoss");
-        }else{
-            alert("존재하지 않는 아이디입니다.");
+        }else {
+            throw new Error(data.message);
         }
     } catch(error){
-
+        const axiosError = error as AxiosError<ErrorResponse>;
+        if (axiosError.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            const errorMessage = axiosError.response.data.message;
+            if (errorMessage === "로그인 실패") {
+                alert("존재하지 않는 아이디입니다.");
+            }
+            console.log(axiosError.response.data);
+            console.log(axiosError.response.status);
+            console.log(axiosError.response.headers);
+        } else if (axiosError.request) {
+            // The request was made but no response was received
+            console.log(axiosError.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', axiosError.message);
+        }
     }
+};
 
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
     };
 
     return (
         // Temp와 TempSideBar는 스크롤바가 완성된 후 삭제 예정
             <Wrapper>
-                <TextInput placeholder="아이디를 입력해주세요" />
-                <TextInput placeholder="비밀번호를 입력해주세요" />
-                {/* 각각 value 추가하기 */}
+                <form onSubmit={onSubmit}>
+                <Input 
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setId(e.target.value)}
+                    placeholder="아이디를 입력해주세요"
+                    />
+                <Input 
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPw(e.target.value)}
+                    placeholder="비밀번호를 입력해주세요"
+                    type="password"
+                    />
                 <Button onClick={onClickLogIn}>로그인</Button>
+                </form>
                 <JoinText>회원가입</JoinText>
             </Wrapper>
     );
@@ -83,4 +107,13 @@ const JoinText = styled.div`
     text-decoration-line: underline;
     color: rgba(33, 33, 33, 0.8);
     cursor: pointer;
+`;
+
+const Input = styled.input`
+    width: 744px;
+    height: 63px;
+    background: #ffffff;
+    border: 1.6px solid #efefef;
+    border-radius: 0.5rem;
+    padding: 12px 0px 12px 28px;
 `;

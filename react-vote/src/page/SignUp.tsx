@@ -27,10 +27,7 @@ export default function SignUp() {
                     </PartButton>
                 </PartWrapper>
                 <DropDown />
-                <TextInput placeholder="이름" />
-                <TextInput placeholder="아이디" />
-                <TextInput placeholder="비밀번호" />
-                <TextInput placeholder="비밀번호 확인" />
+                
                 {/* 각각 value 추가하기 */}
                 <Button>회원가입</Button>
                 {/* 회원가입 하면 바로 팟짱 투표로 가는걸로할까 아니면 로그인 페이지로 갈까 */}

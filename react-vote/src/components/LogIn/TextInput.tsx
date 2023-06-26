@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 interface props {
     placeholder: string;
-    // onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function TextInput({ placeholder }: props) {
