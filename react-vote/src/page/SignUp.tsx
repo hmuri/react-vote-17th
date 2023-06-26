@@ -51,7 +51,7 @@ export default function SignUp() {
             formData.append('team', selectTeam);
             
 
-            const response = await axios.post('http://3.37.230.93/accounts/signup', formData);
+            const response = await axios.post('https://ceos-vote.kro.kr/accounts/signup/', formData);
             const data = response.data;
             alert('회원 가입 성공');
             console.log(data);

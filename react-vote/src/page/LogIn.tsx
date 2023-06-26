@@ -17,7 +17,7 @@ export default function LogIn() {
     const [userInfos, setUserInfo] = useRecoilState(userInfo);
     const [active, setActive] = useRecoilState(userActive);
     useEffect(() => {
-        localStorage.setItem('active', JSON.stringify(active));
+        localStorage.setItem('active', active.toString());
       }, [active]);
     const navigateToVoteBoss = () =>{
         window.location.replace("/voteBoss");
@@ -28,12 +28,13 @@ export default function LogIn() {
             formData.append('username', id);
             formData.append('password', pw);
 
-        const response = await axios.post(`http://3.37.230.93/accounts/login/`, formData);
+        const response = await axios.post(`http://ce/accounts/login/`, formData);
         const data = response.data;
 
         if(data.message === "로그인 성공"){
             const accessToken = data.token.access;
             axios.defaults.headers.common['Authorization'] = accessToken;
+            localStorage.setItem('access', JSON.stringify(accessToken));
             setUserInfo(data.user);
             localStorage.setItem('userInfo', JSON.stringify(data.user));
             setActive(true);
@@ -64,6 +65,7 @@ export default function LogIn() {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     };
+
 
     return (
         // Temp와 TempSideBar는 스크롤바가 완성된 후 삭제 예정
