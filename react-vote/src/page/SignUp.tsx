@@ -46,9 +46,10 @@ export default function SignUp() {
             formData.append('username', userId);
             formData.append('password', password);
             formData.append('name', name);
+            formData.append('email', email);
             formData.append('part', selectPart);
             formData.append('team', selectTeam);
-            formData.append('email', email);
+            
 
             const response = await axios.post('http://3.37.230.93/accounts/signup', formData);
             const data = response.data;
