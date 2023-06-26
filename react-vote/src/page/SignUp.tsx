@@ -1,16 +1,19 @@
 import styled from 'styled-components';
-import TextInput from '../components/LogIn/TextInput';
 import { ButtonHTMLAttributes, useState } from 'react';
 import DropDown from '../components/LogIn/DropDown';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 type PartButtonProps = {
     selected: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
+interface ErrorResponse {
+    message: string;
+}
+
 export default function SignUp() {
-    const [selectPart, setSelectPart] = useState('frontend');
+    const [selectPart, setSelectPart] = useState('프론트엔드');
     const [selectTeam, setSelectTeam] = useState('');
     const [name, setName] = useState('');
     const [userId, setUserId] = useState('');
@@ -49,25 +52,34 @@ export default function SignUp() {
             formData.append('email', email);
             formData.append('part', selectPart);
             formData.append('team', selectTeam);
-            
 
             const response = await axios.post('https://ceos-vote.kro.kr/accounts/signup/', formData);
             const data = response.data;
             alert('회원 가입 성공');
             console.log(data);
-
         } catch (error) {
-            alert('회원 가입에 실패하였습니다.');
+            const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
+
+            if (axiosError.response) {
+                const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
+                console.log(axiosError.response.data);
+                console.log(axiosError.response.status);
+                console.log(axiosError.response.headers);
+            } else if (axiosError.request) {
+                console.log(axiosError.request);
+            } else {
+                console.log('Error', axiosError.message);
+            }
         }
     };
 
     return (
         <SignUpForm onSubmit={handleSignUp}>
             <PartWrapper>
-                <PartButton onClick={() => onClickChoosePart('frontend')} selected={selectPart === 'frontend'}>
+                <PartButton onClick={() => onClickChoosePart('프론트엔드')} selected={selectPart === '프론트엔드'}>
                     프론트엔드
                 </PartButton>
-                <PartButton onClick={() => onClickChoosePart('backend')} selected={selectPart === 'backend'}>
+                <PartButton onClick={() => onClickChoosePart('백엔드')} selected={selectPart === '백엔드'}>
                     백엔드
                 </PartButton>
             </PartWrapper>

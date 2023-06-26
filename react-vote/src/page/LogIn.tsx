@@ -1,7 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
 import styled from 'styled-components';
-import TextInput from '../components/LogIn/TextInput';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -28,7 +27,7 @@ export default function LogIn() {
             formData.append('username', id);
             formData.append('password', pw);
 
-        const response = await axios.post(`http://ce/accounts/login/`, formData);
+        const response = await axios.post(`https://ceos-vote.kro.kr/accounts/login/`, formData);
         const data = response.data;
 
         if(data.message === "로그인 성공"){

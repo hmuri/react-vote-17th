@@ -47,10 +47,12 @@ function InfoBox({isDisabled} : {isDisabled : boolean}){
       }, [active]);
     */
     const onClickLogOut = async () => {
+        console.log(localStorage.getItem('access'));
+        let access = localStorage.getItem('access');
         try{
         const response = await axios.post(`https://ceos-vote.kro.kr/accounts/logout/`, null, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('access')}`, // 로그인 시 발급받은 토큰 사용
+                Authorization: `Bearer ${access}`, // 로그인 시 발급받은 토큰 사용
               }, 
         });
         const data = response.data;
@@ -62,7 +64,6 @@ function InfoBox({isDisabled} : {isDisabled : boolean}){
     }
     if (userInfoString){
         const userInfo = JSON.parse(userInfoString);
-        console.log(localStorage.getItem('access'));
     return(
         <Container isDisabled={isDisabled}>
             <NameBox>{userInfo.username}</NameBox>
