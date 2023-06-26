@@ -2,7 +2,11 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 
-export default function DropDown() {
+type DropDownProps = {
+    onSelectTeam: (option: string) => void;
+};
+
+export default function DropDown({ onSelectTeam }: DropDownProps) {
     const [viewOpen, setViewOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState('');
 
@@ -12,6 +16,7 @@ export default function DropDown() {
 
     const handleSelectValue = (option: string) => {
         setSelectedValue(option);
+        onSelectTeam(option);
         setViewOpen(false);
     };
 
