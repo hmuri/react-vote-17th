@@ -5,7 +5,7 @@ import TextInput from '../components/LogIn/TextInput';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { userInfo } from '../recoil';
+import { userInfo, userActive } from '../recoil';
 
 interface ErrorResponse {
     message: string;
@@ -15,6 +15,13 @@ export default function LogIn() {
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
     const [userInfos, setUserInfo] = useRecoilState(userInfo);
+    const [active, setActive] = useRecoilState(userActive);
+    useEffect(() => {
+        localStorage.setItem('active', JSON.stringify(active));
+      }, [active]);
+    const navigateToVoteBoss = () =>{
+        window.location.replace("/voteBoss");
+    }
     const onClickLogIn = async () => {
         try{
             const formData = new FormData();
@@ -28,6 +35,10 @@ export default function LogIn() {
             const accessToken = data.token.access;
             axios.defaults.headers.common['Authorization'] = accessToken;
             setUserInfo(data.user);
+            localStorage.setItem('userInfo', JSON.stringify(data.user));
+            setActive(true);
+            navigateToVoteBoss();
+
         }else {
             throw new Error(data.message);
         }

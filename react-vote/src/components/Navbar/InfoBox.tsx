@@ -38,15 +38,22 @@ const LogOutBtn = styled.button`
 
 
 function InfoBox({isDisabled} : {isDisabled : boolean}){
-    const user = useRecoilValue(userInfo);
+    const userInfoString = localStorage.getItem('userInfo');
+    if (userInfoString){
+        const userInfo = JSON.parse(userInfoString);
     return(
         <Container isDisabled={isDisabled}>
-            <NameBox>{user.username}</NameBox>
-            <TeamBox>{user.team}</TeamBox>
-            <PartBox>{user.part}</PartBox>
+            <NameBox>{userInfo.username}</NameBox>
+            <TeamBox>{userInfo.team}</TeamBox>
+            <PartBox>{userInfo.part}</PartBox>
             <LogOutBtn>로그아웃</LogOutBtn>
         </Container>
     );
+    }else{
+        return(
+            <div>정보를 찾을 수 없습니다.</div>
+        );
+    }
 }
 
 export default InfoBox;
