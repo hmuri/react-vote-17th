@@ -9,29 +9,31 @@ import { userActive } from '../../recoil';
 
 function Navbar({location} : {location: string}){
     const navigate = useNavigate();
-    const active = useRecoilValue(userActive);
-    const [isActive, setIsActive] = useState(active);
-    useEffect(() => {
-        console.log('1' + active);
-        setIsActive(active);
-    }, [active]);
+
+
+        const userActive = localStorage.getItem('active');
+        const isActive = userActive ? JSON.parse(userActive) : false 
+
+        console.log(isActive);
+
     
     const goToVotePage = (path: string) => (event: React.MouseEvent<HTMLDivElement>) => {
-        if(isActive){
+        const pageActive = localStorage.getItem('active');
+        const isPageActive = pageActive ? JSON.parse(pageActive) : false 
+        console.log(isPageActive);
+        if(isPageActive){
             navigate(path);
         }else{
             alert('로그인이 필요한 서비스입니다.');
-            console.log('2' + isActive);
         }
     }
-    console.log('3' + isActive);
     return(
         <Container>
             <LogoBox/>
             <LogBox isDisabled={isActive ? true : false} >로그인</LogBox>
             <InfoBox isDisabled={isActive ? false : true}/>
-            <VoteBox isActive={(isActive==true)&&location == '/voteBoss' || location == '/bossResult'} onClick={goToVotePage('/voteBoss')}>파트장 투표</VoteBox>
-            <VoteBox isActive={(isActive==true)&&location == '/voteDemo' || location == '/demoResult'} onClick={goToVotePage('/voteDemo')}>데모데이 투표</VoteBox>
+            <VoteBox isActive={(isActive==true)&&((location == '/voteBoss') || (location == '/bossResult'))} onClick={goToVotePage('/voteBoss')}>파트장 투표</VoteBox>
+            <VoteBox isActive={(isActive==true)&&((location == '/voteDemo') || (location == '/demoResult'))} onClick={goToVotePage('/voteDemo')}>데모데이 투표</VoteBox>
         </Container>
     );
 }

@@ -13,9 +13,9 @@ interface ErrorResponse {
 function InfoBox({isDisabled} : {isDisabled : boolean}){
     const userInfoString = localStorage.getItem('userInfo');
     const [active, setActive] = useRecoilState(userActive);
-    useEffect(() => {
+    /*useEffect(() => {
         localStorage.setItem('active', active.toString());
-      }, [active]);
+      }, [active]);*/
     const resetStorage = () => {
         localStorage.clear();
     }
@@ -33,7 +33,7 @@ function InfoBox({isDisabled} : {isDisabled : boolean}){
         const data = response.data;
         localStorage.clear();
         resetStorage();
-        setActive(false);
+        localStorage.setItem('active', 'false');
         window.location.replace('/'); 
         } catch(error){
             const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
