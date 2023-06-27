@@ -1,5 +1,5 @@
 import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
-import { IUserInfo } from './interface';
+import { IUserInfo, ITeam } from './interface';
 
 export const userActive = atom<boolean>({
     key: 'userActive',
@@ -22,6 +22,7 @@ export const voteResultState = atom({
     key: 'voteResult',
     default: { vote_count: [] },
 });
+
 export const voteResultList = atom<any[]>({
     key: 'allMembers',
     default: [
@@ -56,3 +57,14 @@ export const useSetAllIndividualsState = () => {
     console.log(voteResultList);
     return useSetRecoilState(voteResultList);
 };
+
+export const teamList = atom<ITeam[]>({
+    key: 'team',
+    default: [
+        { name: '바리바리', count: 0 },
+        { name: 'Dansupport', count: 0 },
+        { name: 'TherapEase', count: 0 },
+        { name: 'Hooking', count: 0 },
+        { name: 'Repick', count: 0 },
+    ],
+});
