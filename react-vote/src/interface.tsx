@@ -6,3 +6,8 @@ export interface IUserInfo{
     part: string,
     team: string,
 }
+
+export interface Team{
+    name: string;
+    count: number;
+}

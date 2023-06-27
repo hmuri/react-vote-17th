@@ -11,14 +11,21 @@ function Navbar({location} : {location: string}){
     const navigate = useNavigate();
     const userActive = localStorage.getItem('active');
     const isActive = userActive ? JSON.parse(userActive) : false 
+    const goToVotePage = (location: string) => (event: React.MouseEvent<HTMLDivElement>) => {
+        if(isActive==true){
+            window.location.replace(`/${location}`);
+        }else{
+            alert('로그인이 필요한 서비스입니다.');
+        }
+    }
     console.log(isActive);
     return(
         <Container>
             <LogoBox/>
             <LogBox isDisabled={isActive ? true : false} >로그인</LogBox>
             <InfoBox isDisabled={isActive ? false : true}/>
-            <VoteBox isActive={(isActive==true)&&location == '/voteBoss' || location == '/bossResult'} onClick={() => navigate("/voteBoss")}>파트장 투표</VoteBox>
-            <VoteBox isActive={location == '/voteDemo' || location == '/demoResult'} onClick={() => navigate("/voteDemo")}>데모데이 투표</VoteBox>
+            <VoteBox isActive={(isActive==true)&&location == '/voteBoss' || location == '/bossResult'} onClick={goToVotePage(location)}>파트장 투표</VoteBox>
+            <VoteBox isActive={(isActive==true)&&location == '/voteDemo' || location == '/demoResult'} onClick={goToVotePage(location)}>데모데이 투표</VoteBox>
         </Container>
     );
 }
