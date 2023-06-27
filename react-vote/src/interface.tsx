@@ -7,7 +7,7 @@ export interface IUserInfo{
     team: string,
 }
 
-export interface Team{
+export interface ITeam{
     name: string;
     count: number;
 }
