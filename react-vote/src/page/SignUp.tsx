@@ -79,7 +79,7 @@ export default function SignUp() {
                 <PartButton type="button" onClick={() => onClickChoosePart('프론트엔드')} selected={selectPart === '프론트엔드'}>
                     프론트엔드
                 </PartButton>
-                <PartButton onClick={() => onClickChoosePart('백엔드')} selected={selectPart === '백엔드'}>
+                <PartButton type="button" onClick={() => onClickChoosePart('백엔드')} selected={selectPart === '백엔드'}>
                     백엔드
                 </PartButton>
             </PartWrapper>

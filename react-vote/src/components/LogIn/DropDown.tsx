@@ -22,7 +22,7 @@ export default function DropDown({ onSelectTeam }: DropDownProps) {
 
     return (
         <DropDownContainer>
-            <DropDownButton onClick={onClickDropDownButton}>
+            <DropDownButton type="button" onClick={onClickDropDownButton}>
                 {selectedValue ? selectedValue : '팀명'}
                 {viewOpen ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
             </DropDownButton>
