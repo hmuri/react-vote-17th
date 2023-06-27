@@ -2,17 +2,22 @@ import React from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import InfoBox from './InfoBox';
+import { useRecoilState } from 'recoil';
+import { userActive } from '../../recoil';
 
 
 
 function Navbar({location} : {location: string}){
     const navigate = useNavigate();
+    const userActive = localStorage.getItem('active');
+    const isActive = userActive ? JSON.parse(userActive) : false 
+    console.log(isActive);
     return(
         <Container>
             <LogoBox/>
-            <LogBox isDisabled={true} >로그인</LogBox>
-            <InfoBox isDisabled={false}/>
-            <VoteBox isActive={location == '/voteBoss' || location == '/bossResult'} onClick={() => navigate("/voteBoss")}>파트장 투표</VoteBox>
+            <LogBox isDisabled={isActive ? true : false} >로그인</LogBox>
+            <InfoBox isDisabled={isActive ? false : true}/>
+            <VoteBox isActive={(isActive==true)&&location == '/voteBoss' || location == '/bossResult'} onClick={() => navigate("/voteBoss")}>파트장 투표</VoteBox>
             <VoteBox isActive={location == '/voteDemo' || location == '/demoResult'} onClick={() => navigate("/voteDemo")}>데모데이 투표</VoteBox>
         </Container>
     );

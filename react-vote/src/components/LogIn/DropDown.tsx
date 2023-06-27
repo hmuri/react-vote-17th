@@ -28,8 +28,8 @@ export default function DropDown({ onSelectTeam }: DropDownProps) {
             </DropDownButton>
             {viewOpen && (
                 <DropDownList>
-                    <DropDownListItem onClick={() => handleSelectValue('BariBari')}>BariBari</DropDownListItem>
-                    <DropDownListItem onClick={() => handleSelectValue('댄서포트')}>댄서포트</DropDownListItem>
+                    <DropDownListItem onClick={() => handleSelectValue('바리바리')}>바리바리</DropDownListItem>
+                    <DropDownListItem onClick={() => handleSelectValue('Dansupport')}>Dansupport</DropDownListItem>
                     <DropDownListItem onClick={() => handleSelectValue('TherapEase')}>TherapEase</DropDownListItem>
                     <DropDownListItem onClick={() => handleSelectValue('Hooking')}>Hooking</DropDownListItem>
                     <DropDownListItem onClick={() => handleSelectValue('Repick')}>Repick</DropDownListItem>
