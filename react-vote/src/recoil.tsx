@@ -25,6 +25,6 @@ export const teamList = atom<ITeam[]>({
         { name: 'Dansupport', count: 0 },
         { name: 'TherapEase', count: 0 },
         { name: 'Hooking', count: 0 },
-        { name: 'Repick', count: 0 },
+        { name: 'RePick', count: 0 },
     ]
 });

@@ -32,7 +32,7 @@ export default function DropDown({ onSelectTeam }: DropDownProps) {
                     <DropDownListItem onClick={() => handleSelectValue('Dansupport')}>Dansupport</DropDownListItem>
                     <DropDownListItem onClick={() => handleSelectValue('TherapEase')}>TherapEase</DropDownListItem>
                     <DropDownListItem onClick={() => handleSelectValue('Hooking')}>Hooking</DropDownListItem>
-                    <DropDownListItem onClick={() => handleSelectValue('Repick')}>Repick</DropDownListItem>
+                    <DropDownListItem onClick={() => handleSelectValue('RePick')}>RePick</DropDownListItem>
                 </DropDownList>
             )}
         </DropDownContainer>

@@ -76,7 +76,7 @@ export default function SignUp() {
     return (
         <SignUpForm onSubmit={handleSignUp}>
             <PartWrapper>
-                <PartButton onClick={() => onClickChoosePart('프론트엔드')} selected={selectPart === '프론트엔드'}>
+                <PartButton type="button" onClick={() => onClickChoosePart('프론트엔드')} selected={selectPart === '프론트엔드'}>
                     프론트엔드
                 </PartButton>
                 <PartButton onClick={() => onClickChoosePart('백엔드')} selected={selectPart === '백엔드'}>
@@ -99,7 +99,7 @@ export default function SignUp() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <Input type="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <Button>회원가입</Button>
+            <Button type="submit">회원가입</Button>
         </SignUpForm>
     );
 }

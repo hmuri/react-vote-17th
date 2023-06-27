@@ -48,19 +48,19 @@ export default function LogIn() {
     } catch(error){
         const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
 
-    if (axiosError.response) {
-        const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
-        if (errorMessage === "로그인 실패") {
-            alert("존재하지 않는 아이디입니다.");
+        if (axiosError.response) {
+            const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
+            if (errorMessage === "로그인 실패") {
+                alert("존재하지 않는 아이디입니다.");
+            }
+            console.log(axiosError.response.data);
+            console.log(axiosError.response.status);
+            console.log(axiosError.response.headers);
+        } else if (axiosError.request) {
+            console.log(axiosError.request);
+        } else {
+            console.log('Error', axiosError.message);
         }
-        console.log(axiosError.response.data);
-        console.log(axiosError.response.status);
-        console.log(axiosError.response.headers);
-    } else if (axiosError.request) {
-        console.log(axiosError.request);
-    } else {
-        console.log('Error', axiosError.message);
-    }
         }
     };
 

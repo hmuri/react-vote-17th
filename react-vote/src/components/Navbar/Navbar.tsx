@@ -10,7 +10,6 @@ import { userActive } from '../../recoil';
 function Navbar({location} : {location: string}){
     const navigate = useNavigate();
 
-
         const userActive = localStorage.getItem('active');
         const isActive = userActive ? JSON.parse(userActive) : false 
 
