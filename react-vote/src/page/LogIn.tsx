@@ -29,6 +29,7 @@ export default function LogIn() {
 
         const response = await axios.post(`https://ceos-vote.kro.kr/accounts/login/`, formData);
         const data = response.data;
+        console.log(data.message);
 
         if(data.message === "로그인 성공"){
             const accessToken = data.token.access;
@@ -37,6 +38,7 @@ export default function LogIn() {
             setUserInfo(data.user);
             localStorage.setItem('userInfo', JSON.stringify(data.user));
             setActive(true);
+            console.log('login' + active);
             navigateToVoteBoss();
 
         }else {

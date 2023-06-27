@@ -14,8 +14,10 @@ import { userActive } from './recoil';
 import { useRecoilValue } from 'recoil';
 
 function CheckLogin({children}: {children: ReactNode}): ReactElement | null {
-    const active = useRecoilValue(userActive);
-    if (!active) {
+    const userActive = localStorage.getItem('active');
+    const isActive = userActive ? JSON.parse(userActive) : false 
+    console.log('alert' + isActive);
+    if (!isActive) {
         alert('로그인이 필요합니다.');
         return <Navigate to="/" replace />;
     }

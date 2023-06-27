@@ -19,13 +19,10 @@ function InfoBox({isDisabled} : {isDisabled : boolean}){
     const resetStorage = () => {
         localStorage.clear();
     }
-    /*useEffect(() => {
-        if(active==true) {
-            window.location.reload(); // reload the page
-        }
-    }, [active]);*/
+
 
     const onClickLogOut = async () => {
+        console.log("Logout function is triggered.");
         try{
         const accessToken = localStorage?.getItem('access')?.replace(/"/g, "");
         const response = await axios.post(`https://ceos-vote.kro.kr/accounts/logout/`, {} , {
