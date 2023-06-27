@@ -22,13 +22,12 @@ function InfoBox({isDisabled} : {isDisabled : boolean}){
     }
     const onClickLogOut = async () => {
         try{
-        console.log(localStorage.getItem('access'));
+        const accessToken = localStorage?.getItem('access')?.replace(/"/g, "");
         const response = await axios.post(`https://ceos-vote.kro.kr/accounts/logout/`, {} , {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('access')}`,
+                Authorization: `Bearer ${accessToken}`,
               }, 
         });
-        console.log(response.data);
         const data = response.data;
         resetStorage();
         alert(data.detail);
@@ -59,7 +58,8 @@ function InfoBox({isDisabled} : {isDisabled : boolean}){
     );
     }else{
         return(
-            <div>정보를 찾을 수 없습니다.</div>
+            <>
+            </>
         );
     }
 }
