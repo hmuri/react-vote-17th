@@ -14,10 +14,10 @@ export default function LogIn() {
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
     const [userInfos, setUserInfo] = useRecoilState(userInfo);
-    const [active, setActive] = useRecoilState(userActive);
-    useEffect(() => {
-        localStorage.setItem('active', active.toString());
-      }, [active]);
+    //const [active, setActive] = useState(false);
+    //useEffect(() => {
+        //localStorage.setItem('active', active.toString());
+    //  }, [active]);
     const navigateToVoteBoss = () =>{
         window.location.replace("/voteBoss");
     }
@@ -29,6 +29,7 @@ export default function LogIn() {
 
         const response = await axios.post(`https://ceos-vote.kro.kr/accounts/login/`, formData);
         const data = response.data;
+        console.log(data.message);
 
         if(data.message === "로그인 성공"){
             const accessToken = data.token.access;
@@ -36,7 +37,9 @@ export default function LogIn() {
             localStorage.setItem('access', JSON.stringify(accessToken));
             setUserInfo(data.user);
             localStorage.setItem('userInfo', JSON.stringify(data.user));
-            setActive(true);
+            //setActive(true);
+            localStorage.setItem('active', 'true');
+            console.log(localStorage.getItem('active'));
             navigateToVoteBoss();
 
         }else {

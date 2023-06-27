@@ -1,31 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import InfoBox from './InfoBox';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { userActive } from '../../recoil';
 
 
 
 function Navbar({location} : {location: string}){
     const navigate = useNavigate();
-    const userActive = localStorage.getItem('active');
-    const isActive = userActive ? JSON.parse(userActive) : false 
-    const goToVotePage = (location: string) => (event: React.MouseEvent<HTMLDivElement>) => {
-        if(isActive==true){
-            window.location.replace(`/${location}`);
+
+
+        const userActive = localStorage.getItem('active');
+        const isActive = userActive ? JSON.parse(userActive) : false 
+
+        console.log(isActive);
+
+    
+    const goToVotePage = (path: string) => (event: React.MouseEvent<HTMLDivElement>) => {
+        const pageActive = localStorage.getItem('active');
+        const isPageActive = pageActive ? JSON.parse(pageActive) : false 
+        console.log(isPageActive);
+        if(isPageActive){
+            navigate(path);
         }else{
             alert('로그인이 필요한 서비스입니다.');
         }
     }
-    console.log(isActive);
     return(
         <Container>
             <LogoBox/>
             <LogBox isDisabled={isActive ? true : false} >로그인</LogBox>
             <InfoBox isDisabled={isActive ? false : true}/>
-            <VoteBox isActive={(isActive==true)&&location == '/voteBoss' || location == '/bossResult'} onClick={goToVotePage(location)}>파트장 투표</VoteBox>
-            <VoteBox isActive={(isActive==true)&&location == '/voteDemo' || location == '/demoResult'} onClick={goToVotePage(location)}>데모데이 투표</VoteBox>
+            <VoteBox isActive={(isActive==true)&&((location == '/voteBoss') || (location == '/bossResult'))} onClick={goToVotePage('/voteBoss')}>파트장 투표</VoteBox>
+            <VoteBox isActive={(isActive==true)&&((location == '/voteDemo') || (location == '/demoResult'))} onClick={goToVotePage('/voteDemo')}>데모데이 투표</VoteBox>
         </Container>
     );
 }

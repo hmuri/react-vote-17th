@@ -13,19 +13,16 @@ interface ErrorResponse {
 function InfoBox({isDisabled} : {isDisabled : boolean}){
     const userInfoString = localStorage.getItem('userInfo');
     const [active, setActive] = useRecoilState(userActive);
-    useEffect(() => {
+    /*useEffect(() => {
         localStorage.setItem('active', active.toString());
-      }, [active]);
+      }, [active]);*/
     const resetStorage = () => {
         localStorage.clear();
     }
-    /*useEffect(() => {
-        if(active==true) {
-            window.location.reload(); // reload the page
-        }
-    }, [active]);*/
+
 
     const onClickLogOut = async () => {
+        console.log("Logout function is triggered.");
         try{
         const accessToken = localStorage?.getItem('access')?.replace(/"/g, "");
         const response = await axios.post(`https://ceos-vote.kro.kr/accounts/logout/`, {} , {
@@ -36,7 +33,7 @@ function InfoBox({isDisabled} : {isDisabled : boolean}){
         const data = response.data;
         localStorage.clear();
         resetStorage();
-        setActive(false);
+        localStorage.setItem('active', 'false');
         window.location.replace('/'); 
         } catch(error){
             const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
