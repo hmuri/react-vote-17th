@@ -16,8 +16,8 @@ export default function BossResult() {
     useEffect(() => {
         const getUserPart = async () => {
             try {
-                const userPart = await fetchUserPart();
-                setUserPart(userPart);
+                const user = await fetchUserPart();
+                setUserPart(user?.userPart);
             } catch (error) {
                 console.error(error);
             }
@@ -59,11 +59,13 @@ export default function BossResult() {
         bossResult();
     }, []);
 
+    //subtitle 결정
     if (userPart === '프론트엔드') {
         subtitle = '프론트엔드';
     } else if (userPart === '백엔드') {
         subtitle = '백엔드';
     }
+
     return (
         <ResultWrapper>
             <Header>🎉축하합니다!🎉</Header>

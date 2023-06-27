@@ -10,24 +10,30 @@ export default function VoteBoss() {
     const [members, setMembers] = useRecoilState<any[]>(voteResultList);
     const [selectedMember, setSelectedMember] = useState('');
     const [userPart, setUserPart] = useState('');
+    const [userName, setUserName] = useState('');
     const [filteredMembers, setFilteredMembers] = useState<any[]>([]);
 
-    const selectMember = (memberName: string) => {
-        setSelectedMember(memberName);
-    };
-
-    //현재 로그인한 유저의 part 정보 가져오기
+    //현재 로그인한 유저의 part 정보와 name 정보 가져오기
     useEffect(() => {
         const getUserPart = async () => {
             try {
-                const userPart = await fetchUserPart();
-                setUserPart(userPart);
+                const user = await fetchUserPart();
+                setUserPart(user?.userPart);
+                setUserName(user?.userName);
             } catch (error) {
                 console.error(error);
             }
         };
         getUserPart();
     }, []);
+
+    const selectMember = (memberName: string) => {
+        if (memberName !== userName || selectedMember === memberName) {
+            setSelectedMember(memberName);
+        } else {
+            alert('자기 자신은 투표할 수 없습니다!');
+        }
+    };
 
     //가져온 유저의 part 정보에 따라 members 리스트 필터링
     useEffect(() => {

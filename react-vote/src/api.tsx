@@ -8,8 +8,9 @@ export const fetchUserPart = async () => {
                 Authorization: `Bearer ${accessToken}`,
             },
         });
+        const userName = response.data.data.name;
         const userPart = response.data.data.part;
-        return userPart;
+        return { userPart, userName };
     } catch (error) {
         console.error(error);
         // AxiosError 객체로 캐스팅
