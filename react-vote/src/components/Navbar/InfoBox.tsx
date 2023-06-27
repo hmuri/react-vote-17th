@@ -3,7 +3,70 @@ import {useEffect} from 'react';
 import styled from 'styled-components';
 import {userInfo, userActive} from '../../recoil';
 import {useRecoilValue, useRecoilState} from 'recoil';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
+interface ErrorResponse {
+    message: string;
+}
+
+
+function InfoBox({isDisabled} : {isDisabled : boolean}){
+    const userInfoString = localStorage.getItem('userInfo');
+    /*const [active, setActive] = useRecoilState(userActive);
+    useEffect(() => {
+        localStorage.setItem('active', active.toString());
+      }, [active]);
+    */
+    const resetStorage = () => {
+        localStorage.clear();
+    }
+    const onClickLogOut = async () => {
+        try{
+        console.log(localStorage.getItem('access'));
+        const response = await axios.post(`https://ceos-vote.kro.kr/accounts/logout/`, {} , {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access')}`,
+              }, 
+        });
+        console.log(response.data);
+        const data = response.data;
+        resetStorage();
+        alert(data.detail);
+        } catch(error){
+            const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
+
+            if (axiosError.response) {
+                const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
+                console.log(axiosError.response.data);
+                console.log(axiosError.response.status);
+                console.log(axiosError.response.headers);
+            } else if (axiosError.request) {
+                console.log(axiosError.request);
+            } else {
+                console.log('Error', axiosError.message);
+            }
+                }
+    }
+    if (userInfoString){
+        const userInfo = JSON.parse(userInfoString);
+    return(
+        <Container isDisabled={isDisabled}>
+            <NameBox>{userInfo.username}</NameBox>
+            <TeamBox>{userInfo.team}</TeamBox>
+            <PartBox>{userInfo.part}</PartBox>
+            <LogOutBtn onClick = {onClickLogOut}>로그아웃</LogOutBtn>
+        </Container>
+    );
+    }else{
+        return(
+            <div>정보를 찾을 수 없습니다.</div>
+        );
+    }
+}
+
+export default InfoBox;
+
+
 
 const Container = styled.div<{ isDisabled : boolean; }>`
     width: 100%;
@@ -37,46 +100,3 @@ const LogOutBtn = styled.button`
     border: solid 1px #224C97;
     border-radius: 2px;
 `
-
-
-function InfoBox({isDisabled} : {isDisabled : boolean}){
-    const userInfoString = localStorage.getItem('userInfo');
-    /*const [active, setActive] = useRecoilState(userActive);
-    useEffect(() => {
-        localStorage.setItem('active', active.toString());
-      }, [active]);
-    */
-    const onClickLogOut = async () => {
-        console.log(localStorage.getItem('access'));
-        let access = localStorage.getItem('access');
-        try{
-        const response = await axios.post(`https://ceos-vote.kro.kr/accounts/logout/`, null, {
-            headers: {
-                Authorization: `Bearer ${access}`, // 로그인 시 발급받은 토큰 사용
-              }, 
-        });
-        const data = response.data;
-        localStorage.clear();
-        alert(data.message);
-        } catch(error){
-
-        }
-    }
-    if (userInfoString){
-        const userInfo = JSON.parse(userInfoString);
-    return(
-        <Container isDisabled={isDisabled}>
-            <NameBox>{userInfo.username}</NameBox>
-            <TeamBox>{userInfo.team}</TeamBox>
-            <PartBox>{userInfo.part}</PartBox>
-            <LogOutBtn onClick = {onClickLogOut}>로그아웃</LogOutBtn>
-        </Container>
-    );
-    }else{
-        return(
-            <div>정보를 찾을 수 없습니다.</div>
-        );
-    }
-}
-
-export default InfoBox;
