@@ -16,13 +16,23 @@ import { useRecoilValue } from 'recoil';
 function CheckLogin({children}: {children: ReactNode}): ReactElement | null {
     const userActive = localStorage.getItem('active');
     const isActive = userActive ? JSON.parse(userActive) : false 
-    console.log('alert' + isActive);
     if (!isActive) {
         alert('로그인이 필요합니다.');
         return <Navigate to="/" replace />;
     }
     return <>{children}</>;
 }
+function CheckLogout({children}: {children: ReactNode}): ReactElement | null {
+    const location = useLocation();
+    const userActive = localStorage.getItem('active');
+    const isActive = userActive ? JSON.parse(userActive) : false 
+    if (isActive) {
+        alert('로그인 상태입니다. 로그아웃 후 시도하십시오');
+        return <Navigate to={location.pathname} replace />;
+    }
+    return <>{children}</>;
+}
+
 
 function App() {
     const location = useLocation();
@@ -36,8 +46,8 @@ function App() {
             <Navbar location = {location.pathname}/>
             <RightContainer>
                 <Routes>
-                    <Route path="/" element={<LogIn/>}/>
-                    <Route path="/signUp" element={<SignUp/>}/>
+                    <Route path="/" element={<CheckLogout><LogIn/></CheckLogout>}/>
+                    <Route path="/signUp" element={<CheckLogout><SignUp/></CheckLogout>}/>
                     <Route path="/voteBoss" element={<CheckLogin><VoteBoss/></CheckLogin>}/>
                     <Route path="/bossResult" element={<CheckLogin><BossResult/></CheckLogin>}/>
                     <Route path="/voteDemo" element={<CheckLogin><VoteDemo/></CheckLogin>}/>

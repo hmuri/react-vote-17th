@@ -60,8 +60,20 @@ export default function SignUp() {
         } catch (error) {
             const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
 
-            if (axiosError.response) {
-                const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
+            if (axiosError.response && axiosError.response.data && Array.isArray(axiosError.response.data)) {
+                const doubleError = axiosError.response.data[0]; // Now TypeScript knows that `data` has a `message` property
+
+                if(doubleError=="username 존재 or email 존재"){
+                    alert('이미 존재하는 아이디 or 이메일입니다.');
+                }
+            }
+            if(axiosError.response){
+                const errorMessage = axiosError.response.data.message;
+                console.log(errorMessage);
+                if(errorMessage === "회원가입 실패"){
+                    console.log('여기에요');
+                    alert('유효한 이메일 주소를 입력하십시오.');
+                }
                 console.log(axiosError.response.data);
                 console.log(axiosError.response.status);
                 console.log(axiosError.response.headers);
