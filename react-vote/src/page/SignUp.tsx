@@ -56,6 +56,7 @@ export default function SignUp() {
             const response = await axios.post('https://ceos-vote.kro.kr/accounts/signup/', formData);
             const data = response.data;
             alert('회원 가입 성공');
+            window.location.replace('/');
             console.log(data);
         } catch (error) {
             const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type

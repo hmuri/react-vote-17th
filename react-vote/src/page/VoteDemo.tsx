@@ -35,14 +35,18 @@ function VoteDemo(){
                 console.log(data.message);
                 console.log(data.data);
                 console.log(data.user);
+                window.location.replace('/demoResult');
             }else {
                 throw new Error(data.message);
             }        
         } catch(error){
             console.error(error);
             const axiosError = error as AxiosError<ErrorResponse>;
-            if (axiosError.response) {
+            if(axiosError.response){
                 const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
+                if(errorMessage == "내 팀은 투표 할 수 없습니다!"){
+                    alert(errorMessage);
+                }
                 console.log(axiosError.response.data);
                 console.log(axiosError.response.status);
                 console.log(axiosError.response.headers);
@@ -58,7 +62,6 @@ function VoteDemo(){
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         voteDemo();
-        window.location.replace('/demoResult');
     };
     
     return(
