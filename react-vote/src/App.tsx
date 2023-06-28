@@ -65,12 +65,13 @@ const Container = styled.div`
 
 `
 const RightContainer = styled.div`
-    margin-left: 186px;
-    width: 100%;
-    height: 100%;
+    width: calc(100vw - 186px);
+    height: 100vh;
     display: flex;
     background-color: #F9F9F9;
-    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 186px;
 `
 
 export default App;

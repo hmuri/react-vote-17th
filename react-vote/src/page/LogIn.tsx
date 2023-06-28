@@ -97,35 +97,42 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     width: 100%;
     height: 100%;
     background-color: #f9f9f9;
+    margin: auto;
 `;
 
 const Button = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 391px;
     height: 77px;
     background: #224c97;
     border-radius: 0.75rem;
     border: none;
-    margin-top: 30px;
+    margin: 30px auto;
+    text-align: center;
 `;
 
 const JoinText = styled.div`
+    display: flex;
     font-size: 16px;
     line-height: 19px;
-    margin-top: 30px;
+    margin: 30px auto;
     text-decoration-line: underline;
     color: rgba(33, 33, 33, 0.8);
     cursor: pointer;
 `;
 
 const Input = styled.input`
+    display: flex;
     width: 744px;
     height: 63px;
     background: #ffffff;
     border: 1.6px solid #efefef;
     border-radius: 0.5rem;
     padding: 12px 0px 12px 28px;
+    margin: 10px auto;
 `;
