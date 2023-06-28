@@ -19,6 +19,8 @@ export default function VoteBoss() {
     const [userName, setUserName] = useState('');
     const [filteredMembers, setFilteredMembers] = useState<any[]>([]);
 
+    let subtitle = '';
+
     //현재 로그인한 유저의 part 정보와 name 정보 가져오기
     useEffect(() => {
         const getUserPart = async () => {
@@ -62,7 +64,6 @@ export default function VoteBoss() {
         try {
             const formData = new FormData();
             formData.append('part', selectedMember);
-            console.log('selectedMember', selectedMember);
             const accessToken = localStorage?.getItem('access')?.replace(/"/g, '');
             const response = await axios.post(`https://ceos-vote.kro.kr/votes/part/`, formData, {
                 headers: {
@@ -70,6 +71,11 @@ export default function VoteBoss() {
                 },
             });
             const data = response.data;
+            if (data.message === '투표 성공') {
+                window.location.replace('/bossResult');
+            } else {
+                throw new Error(data.message);
+            }
         } catch (error) {
             console.error(error);
             const axiosError = error as AxiosError<ErrorResponse>;
@@ -90,17 +96,22 @@ export default function VoteBoss() {
         voteBoss();
     };
 
-    const onClickSubmitButton = () => {
-        navigate('/bossResult');
-    };
-
+    if (userPart === '프론트엔드') {
+        subtitle = '프론트엔드';
+    } else if (userPart === '백엔드') {
+        subtitle = '백엔드';
+    }
     return (
         <VoteWrapper onSubmit={onSubmit}>
-            <HeaderBox>프론트 파트장 투표</HeaderBox>
+            <HeaderBox>{subtitle} 파트장 투표</HeaderBox>
             <VoteList>
                 {filteredMembers.map((value, index) => (
                     <div key={index}>
-                        <VoteBox onClick={() => selectMember(value.part)} selected={value.part === selectedMember}>
+                        <VoteBox
+                            type="button"
+                            onClick={() => selectMember(value.part)}
+                            selected={value.part === selectedMember}
+                        >
                             {value.part}
                         </VoteBox>
                     </div>

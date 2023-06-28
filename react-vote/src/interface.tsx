@@ -11,3 +11,8 @@ export interface ITeam {
     name: string;
     count: number;
 }
+
+export interface IVoteItem {
+    part: string;
+    total: number;
+}

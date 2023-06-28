@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { IUserInfo } from '../interface';
+import { IUserInfo, IVoteItem } from '../interface';
 import { ReactComponent as Crown } from '../assets/images/Crown.svg';
 import axios from 'axios';
 import { useSetAllIndividualsState, useAllIndividuals, voteResultList } from '../recoil';
 import { fetchUserPart } from '../api';
+import _ from 'lodash';
 
 export default function BossResult() {
     const [userPart, setUserPart] = useState('');
-    let subtitle = '';
+    const [subtitle, setSubtitle] = useState('');
 
     const setAllIndividualsState = useSetAllIndividualsState();
     const voteResult = useAllIndividuals();
@@ -35,37 +36,54 @@ export default function BossResult() {
                     },
                 });
                 const data = response.data;
-                console.log('Data', data);
-                let updatedVoteResult = voteResult.map((item) => ({ ...item }));
+                console.log('..');
 
-                // 만약에 유저의 part가 프론트엔드라면
-                if (userPart === '프론트엔드') {
-                    updatedVoteResult = voteResult.filter((member) => member.team === '프론트엔드');
-                }
+                const filteredVoteResult =
+                    userPart == '프론트엔드'
+                        ? voteResult.filter((member) => member.team === '프론트엔드')
+                        : userPart === '백엔드'
+                        ? voteResult.filter((member) => member.team === '백엔드')
+                        : voteResult;
 
-                // 만약에 유저의 part가 백엔드라면
-                else if (userPart === '백엔드') {
-                    updatedVoteResult = voteResult.filter((member) => member.team === '백엔드');
-                }
+                setAllIndividualsState(filteredVoteResult);
 
-                //updatedVoteResult 내림차순으로 sort 필요
-                updatedVoteResult.sort((a, b) => b.total - a.total);
-
-                setAllIndividualsState(updatedVoteResult);
+                data.vote_count.forEach((incomingItem: { part: string; total: number }) => {
+                    for (let i = 0; i < filteredVoteResult.length; i++) {
+                        const originalItem = filteredVoteResult[i];
+                        if (originalItem.part === incomingItem.part) {
+                            if (incomingItem.total !== 0) {
+                                setAllIndividualsState((prevFilteredVoteResult) => {
+                                    const updatedState = prevFilteredVoteResult.map((item) => {
+                                        if (item.part === incomingItem.part) {
+                                            return {
+                                                ...item,
+                                                total: incomingItem.total,
+                                            };
+                                        }
+                                        return item;
+                                    });
+                                    const sortedState = updatedState.sort((a, b) => b.total - a.total);
+                                    return sortedState;
+                                });
+                            }
+                        }
+                    }
+                });
             } catch (error) {
                 console.log(error);
             }
         };
-
         bossResult();
     }, []);
 
     //subtitle 결정
-    if (userPart === '프론트엔드') {
-        subtitle = '프론트엔드';
-    } else if (userPart === '백엔드') {
-        subtitle = '백엔드';
-    }
+    useEffect(() => {
+        if (userPart === '프론트엔드') {
+            setSubtitle('프론트엔드');
+        } else if (userPart === '백엔드') {
+            setSubtitle('백엔드');
+        }
+    }, [userPart]);
 
     return (
         <ResultWrapper>
@@ -76,6 +94,7 @@ export default function BossResult() {
                     <ResultBox key={index} isFirst={index === 0}>
                         {index === 0 && <Crown />}
                         <p>{item.part}</p>
+                        <p>{item.total}</p>
                     </ResultBox>
                 ))}
             </ResultList>

@@ -54,7 +54,6 @@ export const useAllIndividuals = () => {
 };
 
 export const useSetAllIndividualsState = () => {
-    console.log(voteResultList);
     return useSetRecoilState(voteResultList);
 };
 
