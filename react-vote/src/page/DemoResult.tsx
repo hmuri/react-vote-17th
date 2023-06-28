@@ -12,6 +12,21 @@ interface ErrorResponse {
 function DemoResult(){
     const [teams, setTeams] = useRecoilState<ITeam[]>(teamList);
     const maxVotes = Math.max(...teams.map(team => team.count));
+    const getRankEmoji = (index: number, isHighest: boolean) => {
+        if (isHighest) {
+            return "🥇";
+        }
+        switch (index) {
+            case 0:
+                return "🥇";
+            case 1:
+                return "🥈";
+            case 2:
+                return "🥉";
+            default:
+                return "🏅";
+        }
+    }
     useEffect(() => {
         demoResult();
     }, []);
@@ -66,10 +81,13 @@ function DemoResult(){
     return(
         <Container>
             {teams.map((team, index) => (
-                <RankingBox key={index}>
-                <p>{index}</p>
-                <p style={{width: "80%"}}>{team.name}</p>
-                <p>{team.count}</p>
+                <RankingBox 
+                key={index}
+                isSelected={team.highest}
+                >
+                <p style={{fontSize: "30px"}}>{getRankEmoji(index, team.highest)}</p>
+                <p style={{width: "80%", fontSize: "28px" }}>{team.name}</p>
+                <p style={{fontSize: "24px" }}>{team.count}</p>
                 </RankingBox>
             ))}
         </Container>
@@ -84,15 +102,17 @@ const Container = styled.div`
     justify-content: center;
 `
 
-const RankingBox = styled.div`
+const RankingBox = styled.div<{isSelected: boolean}>`
     display: flex;
     width: 455px;
-    height: 54px;
+    height: 74px;
     align-items: center;
     justify-content: center;
     text-align: center;
     margin-bottom: 1rem;
-    background-color: white;
+    background-color: ${(props) => (props.isSelected ? "#224C97" : "white")};
+    color: ${(props) => (props.isSelected ? "white" : "black")};
+    border-radius: 12px;
 `
 
 export default DemoResult;
