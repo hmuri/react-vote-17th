@@ -14,10 +14,9 @@ export default function LogIn() {
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
     const [userInfos, setUserInfo] = useRecoilState(userInfo);
-    //const [active, setActive] = useState(false);
-    //useEffect(() => {
-        //localStorage.setItem('active', active.toString());
-    //  }, [active]);
+    const goToSignUp = () =>{
+        window.location.replace("/signUp");
+    }
     const navigateToVoteBoss = () =>{
         window.location.replace("/voteBoss");
     }
@@ -85,7 +84,7 @@ export default function LogIn() {
                     />
                 <Button onClick={onClickLogIn}>로그인</Button>
                 </form>
-                <JoinText>회원가입</JoinText>
+                <JoinText onClick={goToSignUp}>회원가입</JoinText>
             </Wrapper>
     );
 }

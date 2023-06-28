@@ -26,6 +26,9 @@ function VoteDemo(){
 
 
     const voteDemo = async () =>{
+        if(selectedTeam ===''){
+            alert('팀을 선택해주세요');
+        }else{
         try{
             const formData = new FormData();
             formData.append('team', selectedTeam);
@@ -51,6 +54,9 @@ function VoteDemo(){
                 const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
                 if(errorMessage == "내 팀은 투표 할 수 없습니다!"){
                     alert(errorMessage);
+                }else if(errorMessage == "투표는 한 번만!"){
+                    alert(errorMessage);
+                    window.location.replace('/demoResult');
                 }
                 console.log(axiosError.response.data);
                 console.log(axiosError.response.status);
@@ -61,6 +67,7 @@ function VoteDemo(){
                 console.log('Error', axiosError.message);
             }
         }
+    }
     };
 
 
