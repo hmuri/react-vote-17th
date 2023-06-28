@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { ReactComponent as Crown } from '../assets/images/Crown.svg';
 import axios from 'axios';
 import { useSetAllIndividualsState, useAllIndividuals } from '../recoil';
-import _ from 'lodash';
 
 export default function BossResult() {
     const [userPart, setUserPart] = useState('');
