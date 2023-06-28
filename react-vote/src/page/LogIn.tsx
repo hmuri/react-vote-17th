@@ -113,6 +113,9 @@ const Button = styled.button`
     border: none;
     margin: 30px auto;
     text-align: center;
+    color: white;
+    font-size: 17px;
+    font-weight: medium;
 `;
 
 const JoinText = styled.div`

@@ -29,7 +29,9 @@ function Navbar({location} : {location: string}){
     return(
         <Container>
             <LogoBox/>
-            <LogBox isDisabled={isActive ? true : false} >로그인</LogBox>
+            <LogBox isDisabled={isActive ? true : false} >
+                {location === '/' ? '로그인' : '회원가입'}
+            </LogBox>
             <InfoBox isDisabled={isActive ? false : true}/>
             <VoteBox isActive={(isActive==true)&&((location == '/voteBoss') || (location == '/bossResult'))} onClick={goToVotePage('/voteBoss')}>파트장 투표</VoteBox>
             <VoteBox isActive={(isActive==true)&&((location == '/voteDemo') || (location == '/demoResult'))} onClick={goToVotePage('/voteDemo')}>데모데이 투표</VoteBox>
@@ -65,6 +67,7 @@ const LogoBox = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     border: solid 2px #F9F9F9;
+    transition: background-color 0.3s ease;
 `
 
 const LogBox = styled.div<{ isDisabled : boolean; }>`
@@ -77,6 +80,7 @@ const LogBox = styled.div<{ isDisabled : boolean; }>`
     font-size: 28px;
     font-weight: 400;
     color: white;
+    transition: background-color 0.3s ease;
 `
 
 const VoteBox = styled.div<{ isActive : boolean; }>`
@@ -91,4 +95,5 @@ const VoteBox = styled.div<{ isActive : boolean; }>`
     color: ${props => props.isActive === true ? '#ffffff' : '#224C97'};
     background-color: ${props => props.isActive === true ? '#224C97' : '#ffffff'};
     border: ${props => props.isActive === true ? 'none' : 'solid 2px #F9F9F9'};
+    transition: background-color 0.3s ease;
 `

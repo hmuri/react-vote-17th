@@ -11,6 +11,7 @@ interface ErrorResponse {
 
 function DemoResult(){
     const [teams, setTeams] = useRecoilState<ITeam[]>(teamList);
+    const maxVotes = Math.max(...teams.map(team => team.count));
     useEffect(() => {
         demoResult();
     }, []);
@@ -34,6 +35,7 @@ function DemoResult(){
                 return team;
             }));
             console.log(response.data);
+
         } catch(error){
             const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
 
@@ -48,6 +50,11 @@ function DemoResult(){
                 console.log('Error', axiosError.message);
             }
         }
+        const maxVotes = Math.max(...teams.map(team => team.count));
+        setTeams(teams.map(team => ({
+            ...team,
+            highest: team.count === maxVotes,
+        })));
     }
 
     
