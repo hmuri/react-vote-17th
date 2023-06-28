@@ -36,6 +36,10 @@ function CheckLogout({children}: {children: ReactNode}): ReactElement | null {
 
 function App() {
     const location = useLocation();
+    const ResetAll = () => {
+        localStorage.clear();
+        window.location.replace('/');
+    }
     /*const goToLogIn = () => {
         alert('로그인이 필요합니다.');
         return <Navigate to="/" replace />;
@@ -54,6 +58,9 @@ function App() {
                     <Route path="/demoResult" element={<CheckLogin><DemoResult/></CheckLogin>}/>
                 </Routes>
             </RightContainer>
+            <FloatingButton onClick={ResetAll}>
+                🔄
+            </FloatingButton>
         </Container>
     );
 }
@@ -73,5 +80,16 @@ const RightContainer = styled.div`
     top: 0;
     left: 186px;
 `
+const FloatingButton = styled.button`
+    position: fixed;
+    background-color: #F9F9F9;
+    right: 20px;
+    top: 20px;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0.8;
+`;
 
 export default App;
