@@ -14,10 +14,9 @@ export default function LogIn() {
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
     const [userInfos, setUserInfo] = useRecoilState(userInfo);
-    //const [active, setActive] = useState(false);
-    //useEffect(() => {
-        //localStorage.setItem('active', active.toString());
-    //  }, [active]);
+    const goToSignUp = () =>{
+        window.location.replace("/signUp");
+    }
     const navigateToVoteBoss = () =>{
         window.location.replace("/voteBoss");
     }
@@ -48,19 +47,19 @@ export default function LogIn() {
     } catch(error){
         const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
 
-    if (axiosError.response) {
-        const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
-        if (errorMessage === "로그인 실패") {
-            alert("존재하지 않는 아이디입니다.");
+        if (axiosError.response) {
+            const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
+            if (errorMessage === "로그인 실패") {
+                alert("존재하지 않는 아이디입니다.");
+            }
+            console.log(axiosError.response.data);
+            console.log(axiosError.response.status);
+            console.log(axiosError.response.headers);
+        } else if (axiosError.request) {
+            console.log(axiosError.request);
+        } else {
+            console.log('Error', axiosError.message);
         }
-        console.log(axiosError.response.data);
-        console.log(axiosError.response.status);
-        console.log(axiosError.response.headers);
-    } else if (axiosError.request) {
-        console.log(axiosError.request);
-    } else {
-        console.log('Error', axiosError.message);
-    }
         }
     };
 
@@ -85,7 +84,7 @@ export default function LogIn() {
                     />
                 <Button onClick={onClickLogIn}>로그인</Button>
                 </form>
-                <JoinText>회원가입</JoinText>
+                <JoinText onClick={goToSignUp}>회원가입</JoinText>
             </Wrapper>
     );
 }
@@ -97,35 +96,45 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     width: 100%;
     height: 100%;
     background-color: #f9f9f9;
+    margin: auto;
 `;
 
 const Button = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 391px;
     height: 77px;
     background: #224c97;
     border-radius: 0.75rem;
     border: none;
-    margin-top: 30px;
+    margin: 30px auto;
+    text-align: center;
+    color: white;
+    font-size: 17px;
+    font-weight: medium;
 `;
 
 const JoinText = styled.div`
+    display: flex;
     font-size: 16px;
     line-height: 19px;
-    margin-top: 30px;
+    margin: 30px auto;
     text-decoration-line: underline;
     color: rgba(33, 33, 33, 0.8);
     cursor: pointer;
 `;
 
 const Input = styled.input`
+    display: flex;
     width: 744px;
     height: 63px;
     background: #ffffff;
     border: 1.6px solid #efefef;
     border-radius: 0.5rem;
     padding: 12px 0px 12px 28px;
+    margin: 10px auto;
 `;

@@ -60,10 +60,10 @@ export const useSetAllIndividualsState = () => {
 export const teamList = atom<ITeam[]>({
     key: 'team',
     default: [
-        { name: '바리바리', count: 0 },
-        { name: 'Dansupport', count: 0 },
-        { name: 'TherapEase', count: 0 },
-        { name: 'Hooking', count: 0 },
-        { name: 'Repick', count: 0 },
+        { name: '바리바리', count: 0, highest: false },
+        { name: 'Dansupport', count: 0, highest: false },
+        { name: 'TherapEase', count: 0, highest: false },
+        { name: 'Hooking', count: 0, highest: false },
+        { name: 'RePick', count: 0, highest: false },
     ],
 });

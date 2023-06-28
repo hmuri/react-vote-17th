@@ -1,31 +1,25 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { IUserInfo, IVoteItem } from '../interface';
 import { ReactComponent as Crown } from '../assets/images/Crown.svg';
 import axios from 'axios';
 import { useSetAllIndividualsState, useAllIndividuals, voteResultList } from '../recoil';
-import { fetchUserPart } from '../api';
 import _ from 'lodash';
 
 export default function BossResult() {
     const [userPart, setUserPart] = useState('');
+
+    const userInfoString = localStorage.getItem('userInfo');
+    if (userInfoString && !userPart) {
+        const userInfo = JSON.parse(userInfoString);
+        console.log('userInfo', userInfo);
+        const part = userInfo.part;
+        setUserPart(part);
+    }
+
     const [subtitle, setSubtitle] = useState('');
 
     const setAllIndividualsState = useSetAllIndividualsState();
     const voteResult = useAllIndividuals();
-
-    useEffect(() => {
-        const getUserPart = async () => {
-            try {
-                const user = await fetchUserPart();
-                setUserPart(user?.userPart);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        getUserPart();
-    }, []);
 
     useEffect(() => {
         const bossResult = async () => {
@@ -36,8 +30,6 @@ export default function BossResult() {
                     },
                 });
                 const data = response.data;
-                console.log('..');
-
                 const filteredVoteResult =
                     userPart == '프론트엔드'
                         ? voteResult.filter((member) => member.team === '프론트엔드')
@@ -73,6 +65,7 @@ export default function BossResult() {
                 console.log(error);
             }
         };
+
         bossResult();
     }, []);
 
@@ -88,16 +81,23 @@ export default function BossResult() {
     return (
         <ResultWrapper>
             <Header>🎉축하합니다!🎉</Header>
-            <SubTitle>{subtitle} 파트장 투표 결과</SubTitle>
-            <ResultList>
-                {voteResult.map((item: { part: string; total: number }, index: number) => (
-                    <ResultBox key={index} isFirst={index === 0}>
-                        {index === 0 && <Crown />}
-                        <p>{item.part}</p>
-                        <p>{item.total}</p>
-                    </ResultBox>
-                ))}
-            </ResultList>
+            {/* <SubTitle>{subtitle} 파트장 투표 결과</SubTitle> */}
+            {userPart === '프론트엔드' || userPart === '백엔드' ? (
+                <>
+                    <SubTitle>{subtitle} 파트장 투표 결과</SubTitle>
+                    <ResultList>
+                        {voteResult.map((item: { part: string; total: number }, index: number) => (
+                            <ResultBox key={index} isFirst={index === 0}>
+                                {index === 0 && <Crown />}
+                                <p>{item.part}</p>
+                                <p>{item.total}</p>
+                            </ResultBox>
+                        ))}
+                    </ResultList>
+                </>
+            ) : (
+                <>Loading...</> // userPart가 프론트엔드 or 백엔드 아닐때
+            )}
         </ResultWrapper>
     );
 }

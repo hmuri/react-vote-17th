@@ -10,6 +10,7 @@ export interface IUserInfo {
 export interface ITeam {
     name: string;
     count: number;
+    highest: boolean;
 }
 
 export interface IVoteItem {
