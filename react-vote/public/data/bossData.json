@@ -1,0 +1,30 @@
+{
+    "message": "투표 조회",
+    "vote_count": [
+      {
+        "part": "김현우",
+        "total": 2
+      },
+      {
+        "part": "최유미",
+        "total": 1
+      }
+    ],
+    "data": [
+      {
+        "id": 2,
+        "part_user": "김바리",
+        "part": "최유미"
+      },
+      {
+        "id": 3,
+        "part_user": "김바리",
+        "part": "김현우"
+      },
+      {
+        "id": 5,
+        "part_user": "yumi",
+        "part": "김현우"
+      }
+    ]
+  }

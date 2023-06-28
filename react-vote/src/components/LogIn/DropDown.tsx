@@ -1,16 +1,16 @@
 import { JSXElementConstructor, ReactElement, ReactFragment, useState } from 'react';
 import styled from 'styled-components';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import {teamList} from '../../recoil';
-import {ITeam} from '../../interface';
-import {useRecoilValue} from 'recoil';
+import { teamList } from '../../recoil';
+import { ITeam } from '../../interface';
+import { useRecoilValue } from 'recoil';
 
 type DropDownProps = {
     onSelectTeam: (option: string) => void;
 };
 
 export default function DropDown({ onSelectTeam }: DropDownProps) {
-    const List: ITeam[] = useRecoilValue(teamList); 
+    const List: ITeam[] = useRecoilValue(teamList);
     const [viewOpen, setViewOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState('');
 
@@ -32,8 +32,10 @@ export default function DropDown({ onSelectTeam }: DropDownProps) {
             </DropDownButton>
             {viewOpen && (
                 <DropDownList>
-                    {List.map((team, index)=> (
-                        <DropDownListItem key={index} onClick={() => handleSelectValue(team.name)}>{team.name}</DropDownListItem>
+                    {List.map((team, index) => (
+                        <DropDownListItem key={index} onClick={() => handleSelectValue(team.name)}>
+                            {team.name}
+                        </DropDownListItem>
                     ))}
                 </DropDownList>
             )}
@@ -54,9 +56,9 @@ const DropDownButton = styled.button`
     cursor: pointer;
 
     display: flex;
+    align-content: space-between;
     align-items: center;
     justify-content: center;
-    text-align: center;
 
     font-size: 20px;
     line-height: 24px;

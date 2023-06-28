@@ -64,14 +64,14 @@ export default function SignUp() {
             if (axiosError.response && axiosError.response.data && Array.isArray(axiosError.response.data)) {
                 const doubleError = axiosError.response.data[0]; // Now TypeScript knows that `data` has a `message` property
 
-                if(doubleError=="username 존재 or email 존재"){
+                if (doubleError == 'username 존재 or email 존재') {
                     alert('이미 존재하는 아이디 or 이메일입니다.');
                 }
             }
-            if(axiosError.response){
+            if (axiosError.response) {
                 const errorMessage = axiosError.response.data.message;
                 console.log(errorMessage);
-                if(errorMessage === "회원가입 실패"){
+                if (errorMessage === '회원가입 실패') {
                     console.log('여기에요');
                     alert('유효한 이메일 주소를 입력하십시오.');
                 }
@@ -89,10 +89,18 @@ export default function SignUp() {
     return (
         <SignUpForm onSubmit={handleSignUp}>
             <PartWrapper>
-                <PartButton type="button" onClick={() => onClickChoosePart('프론트엔드')} selected={selectPart === '프론트엔드'}>
+                <PartButton
+                    type="button"
+                    onClick={() => onClickChoosePart('프론트엔드')}
+                    selected={selectPart === '프론트엔드'}
+                >
                     프론트엔드
                 </PartButton>
-                <PartButton type="button" onClick={() => onClickChoosePart('백엔드')} selected={selectPart === '백엔드'}>
+                <PartButton
+                    type="button"
+                    onClick={() => onClickChoosePart('백엔드')}
+                    selected={selectPart === '백엔드'}
+                >
                     백엔드
                 </PartButton>
             </PartWrapper>
@@ -145,6 +153,7 @@ const PartButton = styled.button<PartButtonProps>`
     margin-top: 30px;
     font-size: 24px;
     cursor: pointer;
+    transition: background-color 0.1s ease;
 `;
 
 const Button = styled.button`
