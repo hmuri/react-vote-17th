@@ -35,6 +35,7 @@ export default function BossResult() {
                     },
                 });
                 const data = response.data;
+                console.log('Data', data);
                 let updatedVoteResult = voteResult.map((item) => ({ ...item }));
 
                 // 만약에 유저의 part가 프론트엔드라면

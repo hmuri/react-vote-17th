@@ -2,11 +2,17 @@ import axios, { AxiosError } from 'axios';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { voteResultList } from '../recoil';
-import { useEffect, useState } from 'react';
+import { ButtonHTMLAttributes, useEffect, useState } from 'react';
 import { ErrorResponse } from '@remix-run/router';
 import { fetchUserPart } from '../api';
+import { useNavigate } from 'react-router';
+
+type VoteButtonProps = {
+    selected: boolean;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function VoteBoss() {
+    const navigate = useNavigate();
     const [members, setMembers] = useRecoilState<any[]>(voteResultList);
     const [selectedMember, setSelectedMember] = useState('');
     const [userPart, setUserPart] = useState('');
@@ -56,6 +62,7 @@ export default function VoteBoss() {
         try {
             const formData = new FormData();
             formData.append('part', selectedMember);
+            console.log('selectedMember', selectedMember);
             const accessToken = localStorage?.getItem('access')?.replace(/"/g, '');
             const response = await axios.post(`https://ceos-vote.kro.kr/votes/part/`, formData, {
                 headers: {
@@ -83,17 +90,23 @@ export default function VoteBoss() {
         voteBoss();
     };
 
+    const onClickSubmitButton = () => {
+        navigate('/bossResult');
+    };
+
     return (
         <VoteWrapper onSubmit={onSubmit}>
             <HeaderBox>프론트 파트장 투표</HeaderBox>
             <VoteList>
                 {filteredMembers.map((value, index) => (
                     <div key={index}>
-                        <ResultBox onClick={() => selectMember(value.part)}>{value.part}</ResultBox>
+                        <VoteBox onClick={() => selectMember(value.part)} selected={value.part === selectedMember}>
+                            {value.part}
+                        </VoteBox>
                     </div>
                 ))}
             </VoteList>
-            <SubmitButton>투표완료</SubmitButton>
+            <SubmitButton type="submit">투표완료</SubmitButton>
         </VoteWrapper>
     );
 }
@@ -105,6 +118,7 @@ const VoteWrapper = styled.form`
     align-items: center;
     justify-content: center;
     align-content: center;
+    gap: 40px;
 `;
 
 const HeaderBox = styled.div`
@@ -130,16 +144,19 @@ const VoteList = styled.div`
     gap: 20px;
 `;
 
-const ResultBox = styled.button`
+const VoteBox = styled.button<VoteButtonProps>`
     display: flex;
     width: 306px;
     height: 74px;
     justify-content: center;
     align-items: center;
     gap: 50px;
-    border-radius: 12px;
     font-size: 26px;
-    color: black;
+    color: ${({ selected }) => (selected ? 'white' : 'black')};
+    gap: 10px;
+    border-radius: 12px;
+    background: ${({ selected }) => (selected ? '#224c97' : '#fff')};
+    border: none;
 `;
 
 const SubmitButton = styled.button`
