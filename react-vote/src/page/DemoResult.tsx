@@ -24,7 +24,7 @@ function DemoResult(){
                 }, 
             });
             const voteCount = response.data.vote_count;
-            setTeams(teams.map(team => {
+            let updatedTeams = teams.map(team => {
                 const matchingVote = voteCount.find((vote: { team: string; total: number; }) => team.name===vote.team);
                 if(matchingVote){
                     return{
@@ -33,8 +33,17 @@ function DemoResult(){
                     };
                 }
                 return team;
-            }));
+            });
             console.log(response.data);
+
+            updatedTeams = [...updatedTeams].sort((a, b) => b.count - a.count);
+            const maxVotes = Math.max(...updatedTeams.map(team => team.count));
+            updatedTeams = updatedTeams.map(team => ({
+                ...team,
+                highest: team.count === maxVotes,
+            }));
+
+            setTeams(updatedTeams);
 
         } catch(error){
             const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
@@ -50,24 +59,40 @@ function DemoResult(){
                 console.log('Error', axiosError.message);
             }
         }
-        const maxVotes = Math.max(...teams.map(team => team.count));
-        setTeams(teams.map(team => ({
-            ...team,
-            highest: team.count === maxVotes,
-        })));
+        
     }
 
     
     return(
-        <div>
+        <Container>
             {teams.map((team, index) => (
-                <div key={index}>
-                <p>Team: {team.name}</p>
-                <p>Votes: {team.count}</p>
-                </div>
+                <RankingBox key={index}>
+                <p>{index}</p>
+                <p style={{width: "80%"}}>{team.name}</p>
+                <p>{team.count}</p>
+                </RankingBox>
             ))}
-        </div>
+        </Container>
     );
 }
+
+const Container = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`
+
+const RankingBox = styled.div`
+    display: flex;
+    width: 455px;
+    height: 54px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 1rem;
+    background-color: white;
+`
 
 export default DemoResult;
