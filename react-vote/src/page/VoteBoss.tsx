@@ -3,9 +3,12 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { voteResultList } from '../recoil';
 import { ButtonHTMLAttributes, useEffect, useState } from 'react';
-import { ErrorResponse } from '@remix-run/router';
 import { fetchUserPart } from '../api';
 import { useNavigate } from 'react-router';
+
+interface ErrorResponse {
+    message: string;
+}
 
 export default function VoteBoss() {
     const navigate = useNavigate();
@@ -36,6 +39,12 @@ export default function VoteBoss() {
             setSelectedMember(memberName);
         } else {
             alert('자기 자신은 투표할 수 없습니다!');
+        }
+        if (selectedMember === memberName) {
+            setSelectedMember(''); // 이미 선택된 팀이면 선택 해제
+        } else {
+            setSelectedMember(memberName); // 선택되지 않은 팀이면 선택 상태로 설정
+            console.log(memberName);
         }
     };
 
@@ -76,6 +85,7 @@ export default function VoteBoss() {
             console.error(error);
             const axiosError = error as AxiosError<ErrorResponse>;
             if (axiosError.response) {
+                const errorMessage = axiosError.response.data.message;
                 console.log(axiosError.response.data);
                 console.log(axiosError.response.status);
                 console.log(axiosError.response.headers);
