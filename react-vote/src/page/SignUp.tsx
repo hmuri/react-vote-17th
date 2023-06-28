@@ -56,12 +56,25 @@ export default function SignUp() {
             const response = await axios.post('https://ceos-vote.kro.kr/accounts/signup/', formData);
             const data = response.data;
             alert('회원 가입 성공');
+            window.location.replace('/');
             console.log(data);
         } catch (error) {
             const axiosError = error as AxiosError<ErrorResponse>; // Use the custom error response type
 
-            if (axiosError.response) {
-                const errorMessage = axiosError.response.data.message; // Now TypeScript knows that `data` has a `message` property
+            if (axiosError.response && axiosError.response.data && Array.isArray(axiosError.response.data)) {
+                const doubleError = axiosError.response.data[0]; // Now TypeScript knows that `data` has a `message` property
+
+                if(doubleError=="username 존재 or email 존재"){
+                    alert('이미 존재하는 아이디 or 이메일입니다.');
+                }
+            }
+            if(axiosError.response){
+                const errorMessage = axiosError.response.data.message;
+                console.log(errorMessage);
+                if(errorMessage === "회원가입 실패"){
+                    console.log('여기에요');
+                    alert('유효한 이메일 주소를 입력하십시오.');
+                }
                 console.log(axiosError.response.data);
                 console.log(axiosError.response.status);
                 console.log(axiosError.response.headers);
@@ -76,10 +89,10 @@ export default function SignUp() {
     return (
         <SignUpForm onSubmit={handleSignUp}>
             <PartWrapper>
-                <PartButton onClick={() => onClickChoosePart('프론트엔드')} selected={selectPart === '프론트엔드'}>
+                <PartButton type="button" onClick={() => onClickChoosePart('프론트엔드')} selected={selectPart === '프론트엔드'}>
                     프론트엔드
                 </PartButton>
-                <PartButton onClick={() => onClickChoosePart('백엔드')} selected={selectPart === '백엔드'}>
+                <PartButton type="button" onClick={() => onClickChoosePart('백엔드')} selected={selectPart === '백엔드'}>
                     백엔드
                 </PartButton>
             </PartWrapper>
@@ -99,7 +112,7 @@ export default function SignUp() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <Input type="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <Button>회원가입</Button>
+            <Button type="submit">회원가입</Button>
         </SignUpForm>
     );
 }
