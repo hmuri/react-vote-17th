@@ -12,19 +12,29 @@ interface ErrorResponse {
 function DemoResult(){
     const [teams, setTeams] = useRecoilState<ITeam[]>(teamList);
     const maxVotes = Math.max(...teams.map(team => team.count));
-    const getRankEmoji = (index: number, isHighest: boolean) => {
-        if (isHighest) {
-            return "🥇";
-        }
-        switch (index) {
-            case 0:
-                return "🥇";
-            case 1:
-                return "🥈";
-            case 2:
-                return "🥉";
-            default:
-                return "🏅";
+    const getRankEmoji = (index: number, count: number, prevCount: number, isHighest: boolean) => {
+        if(count === prevCount) {
+            switch (index - 1) { // 이전 등수의 이모지를 그대로 사용
+                case 0:
+                    return "🥇";
+                case 1:
+                    return "🥈";
+                case 2:
+                    return "🥉";
+                default:
+                    return "🏅";
+            }
+        } else {
+            switch (index) { // 이전 등수 + 1 의 이모지를 사용
+                case 0:
+                    return "🥇";
+                case 1:
+                    return "🥈";
+                case 2:
+                    return "🥉";
+                default:
+                    return "🏅";
+            }
         }
     }
     useEffect(() => {
@@ -85,7 +95,7 @@ function DemoResult(){
                 key={index}
                 isSelected={team.highest}
                 >
-                <p style={{fontSize: "30px"}}>{getRankEmoji(index, team.highest)}</p>
+                <p style={{fontSize: "30px"}}>{getRankEmoji(index, team.count, index > 0 ? teams[index-1].count : -1, team.highest)}</p>
                 <p style={{width: "80%", fontSize: "28px" }}>{team.name}</p>
                 <p style={{fontSize: "24px" }}>{team.count}</p>
                 </RankingBox>
