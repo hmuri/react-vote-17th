@@ -7,7 +7,7 @@ import Navbar from './components/Navbar/Navbar';
 import BossResult from './page/BossResult';
 import DemoResult from './page/DemoResult';
 import SignUp from './page/SignUp';
-import LogIn from './page/Login';
+import LogIn from './page/LogIn';
 import VoteBoss from './page/VoteBoss';
 import VoteDemo from './page/VoteDemo';
 import { userActive } from './recoil';
