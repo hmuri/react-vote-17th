@@ -53,6 +53,8 @@ const DropDownButton = styled.button`
 
     display: flex;
     align-content: space-between;
+    align-items: center;
+    justify-content: center;
 
     font-size: 20px;
     line-height: 24px;

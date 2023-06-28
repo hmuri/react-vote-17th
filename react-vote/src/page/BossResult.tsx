@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Crown } from '../assets/images/Crown.svg';
 import axios from 'axios';
-import { useSetAllIndividualsState, useAllIndividuals, voteResultList } from '../recoil';
+import { useSetAllIndividualsState, useAllIndividuals } from '../recoil';
 import _ from 'lodash';
 
 export default function BossResult() {
@@ -81,7 +81,6 @@ export default function BossResult() {
     return (
         <ResultWrapper>
             <Header>🎉축하합니다!🎉</Header>
-            {/* <SubTitle>{subtitle} 파트장 투표 결과</SubTitle> */}
             {userPart === '프론트엔드' || userPart === '백엔드' ? (
                 <>
                     <SubTitle>{subtitle} 파트장 투표 결과</SubTitle>
@@ -90,7 +89,6 @@ export default function BossResult() {
                             <ResultBox key={index} isFirst={index === 0}>
                                 {index === 0 && <Crown />}
                                 <p>{item.part}</p>
-                                <p>{item.total}</p>
                             </ResultBox>
                         ))}
                     </ResultList>
@@ -114,11 +112,13 @@ const ResultWrapper = styled.div`
 const Header = styled.h1`
     font-size: 48px;
     color: #224c97;
+    margin-bottom: 0px;
 `;
 
 const SubTitle = styled.h2`
     font-size: 32px;
     color: #224c97;
+    margin-top: 20px;
 `;
 
 const ResultList = styled.div`
@@ -141,4 +141,8 @@ const ResultBox = styled.div<{ isFirst: boolean }>`
     font-size: 26px;
     background-color: ${(props) => (props.isFirst ? '#224C97' : '#FFFFFF')};
     color: ${(props) => (props.isFirst ? '#FFFFFF' : '#000000')};
+    svg {
+        position: absolute;
+        transform: translate(-225%, 0%);
+    }
 `;

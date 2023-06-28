@@ -91,6 +91,8 @@ function DemoResult() {
 
     return (
         <Container>
+            <Header>🎉축하합니다!🎉</Header>
+            <SubTitle>데모데이 팀 투표 결과</SubTitle>
             {teams.map((team, index) => (
                 <RankingBox key={index} isSelected={team.highest}>
                     <p style={{ fontSize: '30px' }}>
@@ -111,7 +113,17 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
 `;
+const Header = styled.h1`
+    font-size: 48px;
+    color: #224c97;
+    margin-bottom: 0px;
+`;
 
+const SubTitle = styled.h2`
+    font-size: 32px;
+    color: #224c97;
+    margin-top: 20px;
+`;
 const RankingBox = styled.div<{ isSelected: boolean }>`
     display: flex;
     width: 455px;

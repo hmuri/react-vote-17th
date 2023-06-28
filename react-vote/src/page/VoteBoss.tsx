@@ -7,10 +7,6 @@ import { ErrorResponse } from '@remix-run/router';
 import { fetchUserPart } from '../api';
 import { useNavigate } from 'react-router';
 
-type VoteButtonProps = {
-    selected: boolean;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
-
 export default function VoteBoss() {
     const navigate = useNavigate();
     const [members, setMembers] = useRecoilState<any[]>(voteResultList);
@@ -110,7 +106,7 @@ export default function VoteBoss() {
                         <VoteBox
                             type="button"
                             onClick={() => selectMember(value.part)}
-                            selected={value.part === selectedMember}
+                            isSelected={value.part === selectedMember}
                         >
                             {value.part}
                         </VoteBox>
@@ -144,6 +140,7 @@ const HeaderBox = styled.div`
     color: #fff;
     text-align: center;
     font-size: 24px;
+    font-weight: bold;
 `;
 
 const VoteList = styled.div`
@@ -155,7 +152,7 @@ const VoteList = styled.div`
     gap: 20px;
 `;
 
-const VoteBox = styled.button<VoteButtonProps>`
+const VoteBox = styled.button<{ isSelected: boolean }>`
     display: flex;
     width: 306px;
     height: 74px;
@@ -163,11 +160,17 @@ const VoteBox = styled.button<VoteButtonProps>`
     align-items: center;
     gap: 50px;
     font-size: 26px;
-    color: ${({ selected }) => (selected ? 'white' : 'black')};
     gap: 10px;
     border-radius: 12px;
-    background: ${({ selected }) => (selected ? '#224c97' : '#fff')};
-    border: none;
+    border: 1.5px solid lightgrey;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    background-color: ${(props) => (props.isSelected ? '#224C97' : 'white')};
+    color: ${(props) => (props.isSelected ? 'white' : 'black')};
+    &:hover {
+        background-color: ${(props) =>
+            props.isSelected ? '#224C97' : '#f5f5f5'}; /* 선택된 상태에서 hover 시 하얀색으로 변경 */
+    }
 `;
 
 const SubmitButton = styled.button`
@@ -179,4 +182,6 @@ const SubmitButton = styled.button`
     border: none;
     border-radius: 12px;
     background: #224c97;
+    font-size: 20px;
+    font-weight: light;
 `;
